@@ -169,6 +169,15 @@ char* multiaddress_get_peer_id(const struct MultiAddress* in) {
 	ptr = strstr(in->string, "/ipfs/");
 	if (ptr != NULL && ptr[6] != 0) {
 		ptr += 6;
+	} else {
+		ptr = strstr(in->string, "/p2p/");
+		if (ptr != NULL && ptr[5] != 0) {
+			ptr += 5;
+		} else {
+			ptr = NULL;
+		}
+	}
+	if (ptr != NULL) {
 		str_len = strlen(ptr);
 		slash = strchr(ptr, '/');
 		if (slash != NULL) {
