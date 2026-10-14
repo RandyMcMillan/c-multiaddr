@@ -79,6 +79,6 @@ int main(int argc, char** argv) {
 			printf("All %d tests passed\n", tests_ran);
 		}
 	}
-	return 1;
+	return (tests_ran - counter) > 0 ? 1 : 0;
 }
 

@@ -31,3 +31,5 @@ clean:
 	rm -f test_multiaddr
 	
 rebuild: clean all
+
+-include ACT.mk
