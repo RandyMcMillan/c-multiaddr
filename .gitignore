@@ -9,3 +9,6 @@
 .settings/language.settings.xml
 test_multiaddr
 
+
+!ACT.mk
+!.github/**
