@@ -5,6 +5,9 @@
 #include <math.h>
 #include <inttypes.h>
 #include <ctype.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include "multiaddr/base58.h"
 #include "multiaddr/varhexutils.h"
 #include "multiaddr/protocols.h"
@@ -457,8 +460,22 @@ char* address_string_to_bytes(struct Protocol * protocol, const char *incoming, 
 			}
 			break;
 		}
-		case 41://IPv6 Must be done
+		case 41://IPv6
 		{
+			struct in6_addr addr6;
+			if (inet_pton(AF_INET6, incoming, &addr6) == 1)
+			{
+				int pos = 0;
+				for (int i = 0; i < 16; i++) {
+					pos += sprintf(&astb__stringy[pos], "%02x", ((unsigned char*)&addr6)[i]);
+				}
+				*results = malloc(strlen(astb__stringy) + 1);
+				if (*results == NULL)
+					return "ERR";
+				memcpy(*results, astb__stringy, strlen(astb__stringy) + 1);
+				*results_size = strlen(astb__stringy);
+				return *results;
+			}
 			return "ERR";
 			break;
 		}
