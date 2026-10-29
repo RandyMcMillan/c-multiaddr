@@ -636,6 +636,16 @@ char* address_string_to_bytes(struct Protocol * protocol, const char *incoming, 
 		{
 			return "ERR";
 		}
+		case 460://quic
+		case 465://quic-v1
+		{
+			*results = malloc(1);
+			if (*results == NULL)
+				return "ERR";
+			(*results)[0] = '\0';
+			*results_size = 0;
+			return *results;
+		}
 		default:
 		{
 			fprintf(stderr, "NO SUCH PROTOCOL!\n");
@@ -689,7 +699,10 @@ int string_to_bytes(uint8_t** finalbytes, size_t* realbbsize, const char* strx, 
 			if(protx != NULL)
 			{
 				strcat(processed, Int_To_Hex(protx->deccode));
-				firstorsecond=2;//Since the next word will be an address
+				if (protx->size == 0)
+					firstorsecond = 1; // no address for this protocol
+				else
+					firstorsecond=2;//Since the next word will be an address
 			}
 			else
 			{
