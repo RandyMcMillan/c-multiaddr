@@ -275,7 +275,7 @@ uint64_t ip2int(const char * ipconvertint)
 			}
 			default:
 			{
-				printf("Somebody misplaced an int\n");
+				fprintf(stderr, "Somebody misplaced an int\n");
 				break;
 			}
 		}
@@ -638,7 +638,7 @@ char* address_string_to_bytes(struct Protocol * protocol, const char *incoming, 
 		}
 		default:
 		{
-			printf("NO SUCH PROTOCOL!\n");
+			fprintf(stderr, "NO SUCH PROTOCOL!\n");
 			return "ERR";
 		}
 	}
@@ -693,7 +693,7 @@ int string_to_bytes(uint8_t** finalbytes, size_t* realbbsize, const char* strx, 
 			}
 			else
 			{
-				printf("\nNo such protocol!\n\n");
+				fprintf(stderr, "\nNo such protocol: %s\n\n", wp);
 				malf=1;
 				break;
 			}
